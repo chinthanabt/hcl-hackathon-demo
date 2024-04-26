@@ -5,6 +5,7 @@ import com.hcl.hackathon.demo.domain.user.UserCreateRequest;
 import com.hcl.hackathon.demo.domain.user.UserCreateResponse;
 import com.hcl.hackathon.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +18,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserCreateResponse> create(@RequestBody UserCreateRequest userCreateRequest){
-        return ResponseEntity.ok(userService.createUser(userCreateRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(userCreateRequest));
     }
 
     @GetMapping
     public ResponseEntity<GetUsersResponse> create(){
-        return ResponseEntity.ok(userService.getUsers());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUsers());
     }
 }
