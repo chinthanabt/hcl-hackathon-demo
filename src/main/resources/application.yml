@@ -46,17 +46,17 @@ spring:
       group-id: my-group
       auto-offset-reset: earliest
 
-#  datasource:
-#    driverClassName: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/testdb
-#    username: root
-#    password: 123
-    
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: root
+    
+#  datasource:
+#    driverClassName: org.h2.Driver
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    password:
 
 #  datasource:
 #      url: jdbc:postgresql://localhost:5434/testdb
