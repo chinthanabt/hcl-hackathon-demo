@@ -1,5 +1,6 @@
 package com.hcl.hackathon.demo.service.impl;
 
+import com.hcl.hackathon.demo.configuration.exceptionHandler.NotFoundException;
 import com.hcl.hackathon.demo.constants.StatusCode;
 import com.hcl.hackathon.demo.domain.instrument.GetInstrumentResponse;
 import com.hcl.hackathon.demo.modelconverters.InstrumentDtoConverter;
@@ -24,7 +25,7 @@ public class InstrumentsServiceImpl implements InstrumentsService {
     @Override
     public GetInstrumentResponse getInstrumentDetails(final String name){
         //this method for get instrument details
-        Instrument instrument = instrumentDtoConverter.instrumentDtoToInstrumentResponse(instrumentRepository.findByName(name));
+        Instrument instrument = instrumentDtoConverter.instrumentDtoToInstrumentResponse(instrumentRepository.findByInstrumentName(name));
         GetInstrumentResponse getInstrumentResponse = new GetInstrumentResponse();
         if(instrument != null){
             getInstrumentResponse = createResponse(instrument);
@@ -41,6 +42,7 @@ public class InstrumentsServiceImpl implements InstrumentsService {
         response.setData(instrument);
         response.setStatusCode(StatusCode.SUCCESS.getCode());
         response.setStatusMessage(StatusCode.SUCCESS.getDesc());
+        return response;
     }
 
 }

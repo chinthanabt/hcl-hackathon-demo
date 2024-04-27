@@ -12,10 +12,10 @@ import java.util.UUID;
 public class Instrument {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
   private String symbol;
-  private String instrument_name;
-  private String instrument_value;
-  private String instrument_type;
+  private String instrumentName;
+  private String instrumentValue;
+  private String instrumentType;
 }

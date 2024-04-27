@@ -15,10 +15,10 @@ public class InstrumentDtoConverter {
 
     public Instrument instrumentDtoToInstrumentResponse(com.hcl.hackathon.demo.entity.portfolio.Instrument repoInstrument){
         final Instrument instrument = new Instrument();
-        instrument.setInstrument_id(repoInstrument.getInstrument_id());
-        instrument.setInstrument_name(repoInstrument.getInstrument_name);
-        instrument.setInstrument_value(repoInstrument.getInstrument_value);
-        instrument.setInstrument_type(repoInstrument.getInstrument_type());
+        instrument.setInstrumentId(repoInstrument.getId());
+        instrument.setInstrumentName(repoInstrument.getInstrumentName());
+        instrument.setInstrumentValue(repoInstrument.getInstrumentValue());
+        instrument.setInstrumentType(repoInstrument.getInstrumentType());
         return instrument;
 
     }
