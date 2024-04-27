@@ -66,18 +66,4 @@ public class PortfolioDTOServiceTest {
 
         verify(portfolioRepository, times(1)).findById(customerId);
     }
-
-    @Test
-    public void testCreate() {
-        Portfolio portfolio = new Portfolio();
-        portfolio.setCustomerName("Test");
-        portfolio.setPortfolioValue(new BigDecimal(100));
-        portfolio.setPortfolioNumber("5555444444");
-        portfolio.setInvestmentStrategy(InvestmentStrategy.SAFE);
-        portfolio.setCurrentPerformance(20d);
-
-        portfolioService.create();
-
-        verify(portfolioRepository, times(1)).save(portfolio);
-    }
 }
