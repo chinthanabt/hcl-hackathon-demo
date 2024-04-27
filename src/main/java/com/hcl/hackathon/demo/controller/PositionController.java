@@ -3,14 +3,13 @@ package com.hcl.hackathon.demo.controller;
 import com.hcl.hackathon.demo.constants.StatusCode;
 import com.hcl.hackathon.demo.domain.BaseResponse;
 import com.hcl.hackathon.demo.domain.PagingResponse;
-import com.hcl.hackathon.demo.domain.position.CreatePositionRequest;
-import com.hcl.hackathon.demo.domain.position.CreatePositionResponse;
+import com.hcl.hackathon.demo.domain.position.TradeRequest;
+import com.hcl.hackathon.demo.domain.position.TradeResponse;
 import com.hcl.hackathon.demo.domain.position.PositionResponse;
 import com.hcl.hackathon.demo.service.PositionService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,22 +31,22 @@ public class PositionController {
       @PathVariable final UUID customerId,
       @RequestParam(name = "page", defaultValue = "0") @Min(0) final int pageNumber,
       @RequestParam(name = "size", defaultValue = REQUEST_PAGE_SIZE_DEFAULT) @Min(1) final int pageSize) {
-
+    log.info("getPositions, customerId: {}", customerId);
     var myPositions = positionService.findMyPositions(customerId, pageNumber, pageSize);
     var pagingResponse = PagingResponse.of(myPositions, PagingResponse.Paging.of(pageNumber, pageSize));
-    var response = BaseResponse.of(StatusCode.SUCCESS.toString(), StatusCode.SUCCESS.toString(), pagingResponse);
+    var response = BaseResponse.of(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getDesc(), pagingResponse);
     return ResponseEntity.ok(response);
   }
 
   @PostMapping(value = "/portfolios/{customerId}/positions")
-  public ResponseEntity<BaseResponse<CreatePositionResponse>> trade(
+  public ResponseEntity<BaseResponse<TradeResponse>> trade(
       @PathVariable final UUID customerId,
-      @RequestBody @Valid CreatePositionRequest createPositionRequest) {
-    createPositionRequest.setCustomerId(customerId);
-    log.info("Start trade, customerId: {}, detail: {}", customerId, createPositionRequest);
-    var position = positionService.trade(createPositionRequest);
+      @RequestBody @Valid TradeRequest tradeRequest) {
+    tradeRequest.setCustomerId(customerId);
+    log.info("Start trade, customerId: {}, detail: {}", customerId, tradeRequest);
+    var position = positionService.trade(tradeRequest);
 
-    var response = BaseResponse.of(StatusCode.SUCCESS.toString(), StatusCode.SUCCESS.toString(), position);
+    var response = BaseResponse.of(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getDesc(), position);
     return ResponseEntity.ok(response);
   }
 }
