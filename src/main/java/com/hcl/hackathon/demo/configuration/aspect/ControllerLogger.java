@@ -10,6 +10,12 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+/**
+ * Logging Aspect
+ *
+ * @author Chinthana
+ */
+
 @Aspect
 @Component
 @Slf4j
