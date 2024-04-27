@@ -21,10 +21,6 @@ swagger:
   application:
     description: HCL HACKATHON DEMO
     version: 1.0
-    contact:
-      name: Chinthana
-      email: chinthana.thennakoon@hcl.com
-      url:
   
 spring:
   application:
@@ -43,7 +39,7 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id: my-group
+      group-id: hcl-group
       auto-offset-reset: earliest
 
   datasource:
@@ -55,18 +51,3 @@ spring:
 springdoc:
   swagger-ui:
     path: /doc/swagger-ui-custom.html
-#  datasource:
-#    driverClassName: org.h2.Driver
-#    url: jdbc:h2:mem:testdb
-#    username: sa
-#    password:
-
-#  datasource:
-#      url: jdbc:postgresql://localhost:5434/testdb
-#      username: postgres
-#      password: root
-
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/testdb
-#    username: admin
-#    password: axiuser

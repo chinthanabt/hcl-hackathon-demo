@@ -41,6 +41,9 @@ public class PositionServiceImpl implements PositionService {
       //handle BUY instrument
       position = positionMapper.toEntity(positionRequest);
       position = positionRepository.save(position);
+      if(null!=position){
+
+      }
     }
     CreatePositionResponse response = new CreatePositionResponse();
     response.setInstrumentId(positionRequest.getInstrumentId());
