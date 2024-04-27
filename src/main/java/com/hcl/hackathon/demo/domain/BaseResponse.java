@@ -5,12 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Data
-public class BaseResponse {
+public class BaseResponse<T> {
     private String statusCode;
 
     private String statusMessage;
 
-    private Object data;
+    private T data;
 
     public static BaseResponse of(String statusCode, String statusMessage, Object data) {
         BaseResponse response = new BaseResponse();

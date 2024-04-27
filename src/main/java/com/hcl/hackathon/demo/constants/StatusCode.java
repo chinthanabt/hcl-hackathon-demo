@@ -3,7 +3,7 @@ package com.hcl.hackathon.demo.constants;
 public enum StatusCode {
     INTERNAL_SERVER_ERROR("99999","Internal Server Error."),
     NOT_FOUND("11111","Not Found"),
-    SUCCESS("00000","success");
+    SUCCESS("00000","SUCCESS");
     StatusCode(String code, String desc) {
         this.code = code;
         this.desc = desc;

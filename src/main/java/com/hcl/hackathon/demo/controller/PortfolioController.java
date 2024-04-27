@@ -12,19 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+import static com.hcl.hackathon.demo.configuration.Constants.BY_CUSTOMER_ID;
+import static com.hcl.hackathon.demo.configuration.Constants.PORTFOLIOS;
+
 @RestController
-@RequestMapping(value = "/portfolios")
+@RequestMapping(value = PORTFOLIOS)
 public class PortfolioController {
     @Autowired
     private PortfolioService portfolioService;
 
-    @GetMapping(value = "/{customerId}")
+    @GetMapping(value = BY_CUSTOMER_ID)
     public ResponseEntity<PortfolioResponse> portfolio(@PathVariable UUID customerId){
         return ResponseEntity.status(HttpStatus.OK).body(portfolioService.getCustomerPortfolio(customerId));
-    }
-
-    @GetMapping(value = "/create")
-    public void create(){
-        portfolioService.create();
     }
 }
