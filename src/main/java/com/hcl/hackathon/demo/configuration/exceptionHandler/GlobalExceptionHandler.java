@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 /**
  * CustomGlobalExceptionHandler.
  *
@@ -24,5 +27,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         CustomErrorDetails customErrorDetails = CustomErrorDetails.
                 of(StatusCode.INTERNAL_SERVER_ERROR.getCode(), StatusCode.INTERNAL_SERVER_ERROR.getDesc());
         return new ResponseEntity<>(customErrorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public final ResponseEntity<Object> handleUserNotFound(NotFoundException ex, WebRequest request) {
+        CustomErrorDetails customErrorDetails = CustomErrorDetails.
+                of(StatusCode.NOT_FOUND.getCode(), StatusCode.NOT_FOUND.getDesc());
+        return new ResponseEntity<>(customErrorDetails, HttpStatus.NOT_FOUND);
     }
 }
