@@ -1,15 +1,12 @@
 package com.hcl.hackathon.demo.service;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.hackathon.demo.configuration.kafka.KafkaProducer;
 import com.hcl.hackathon.demo.entity.AuditDto;
 import com.hcl.hackathon.demo.entity.portfolio.Position;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 
 @Service

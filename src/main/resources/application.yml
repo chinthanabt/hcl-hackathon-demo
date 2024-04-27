@@ -1,6 +1,5 @@
 server:
   port: 8847
-  base-url: http://localhost:8847/
     
 management:
   endpoint:
