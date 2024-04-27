@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class KafkaProducer {
-    private static final String TOPIC = "TEST-TOPIC";
+    private static final String TOPIC = "hcl-audit-topic";
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;

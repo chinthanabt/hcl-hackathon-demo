@@ -43,6 +43,9 @@ public class PositionServiceImpl implements PositionService {
       position = positionMapper.toEntity(positionRequest);
       position.setTransactionRef(transactionRef);
       position = positionRepository.save(position);
+      if(null!=position){
+
+      }
     }
     TradeResponse response = new TradeResponse();
     response.setInstrumentId(positionRequest.getInstrumentId());

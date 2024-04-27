@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Table(name = "instrument")
@@ -14,7 +15,7 @@ public class Instrument {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String symbol;
-  private String name;
-  private BigDecimal value;
-  private String type;
+  private String instrument_name;
+  private String instrument_value;
+  private String instrument_type;
 }
