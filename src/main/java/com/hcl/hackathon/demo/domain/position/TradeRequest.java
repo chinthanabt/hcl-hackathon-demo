@@ -2,19 +2,28 @@ package com.hcl.hackathon.demo.domain.position;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hcl.hackathon.demo.constants.TradeType;
-import com.hcl.hackathon.demo.entity.portfolio.Instrument;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreatePositionResponse {
+public class TradeRequest {
 
-  private long instrumentId;
+  private UUID customerId;
+
+  @NotNull
+  private Long instrumentId;
+
+  @NotNull
+  private BigDecimal instrumentPrice;
+
+  @NotNull
+  private TradeType tradeType;
+
+  @Min(1)
   private int units;
 }

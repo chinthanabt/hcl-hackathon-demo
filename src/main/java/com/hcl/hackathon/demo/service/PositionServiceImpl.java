@@ -1,12 +1,11 @@
 package com.hcl.hackathon.demo.service;
 
 import com.hcl.hackathon.demo.configuration.exceptionHandler.TradingException;
+import com.hcl.hackathon.demo.constants.StatusCode;
 import com.hcl.hackathon.demo.constants.TradeType;
-import com.hcl.hackathon.demo.domain.position.CreatePositionRequest;
-import com.hcl.hackathon.demo.domain.position.CreatePositionResponse;
-import com.hcl.hackathon.demo.domain.position.PositionItem;
+import com.hcl.hackathon.demo.domain.position.TradeRequest;
+import com.hcl.hackathon.demo.domain.position.TradeResponse;
 import com.hcl.hackathon.demo.domain.position.PositionResponse;
-import com.hcl.hackathon.demo.entity.portfolio.Instrument;
 import com.hcl.hackathon.demo.entity.portfolio.Position;
 import com.hcl.hackathon.demo.mapper.PositionMapper;
 import com.hcl.hackathon.demo.repository.PositionRepository;
@@ -28,30 +27,39 @@ public class PositionServiceImpl implements PositionService {
 
   @Override
   @Transactional
-  public CreatePositionResponse trade(CreatePositionRequest positionRequest) {
+  public TradeResponse trade(TradeRequest positionRequest) {
     Position position;
     var previousPositionOptional = positionRepository.getByCustomerIdAndInstrumentId(positionRequest.getCustomerId(), positionRequest.getInstrumentId());
+    var transactionRef = generateTransactionRef();
     if (previousPositionOptional.isPresent()) {
       //update instrument
-      position = updatePositionInstrument(previousPositionOptional.get(), positionRequest);
+      position = updatePositionInstrument(previousPositionOptional.get(), positionRequest, transactionRef);
     } else {
+      //insert new instrument to position
       if (TradeType.sell.equals(positionRequest.getTradeType())) {
-        throw new TradingException("100002", "You don't have enough instrument to sell");
+        throw new TradingException(StatusCode.TRADE_NO_INSTRUMENT.getCode(), StatusCode.TRADE_NO_INSTRUMENT.getDesc());
       }
       //handle BUY instrument
       position = positionMapper.toEntity(positionRequest);
+      position.setTransactionRef(transactionRef);
       position = positionRepository.save(position);
     }
-    CreatePositionResponse response = new CreatePositionResponse();
+    TradeResponse response = new TradeResponse();
     response.setInstrumentId(positionRequest.getInstrumentId());
     response.setUnits(position.getUnits());
+
+    //TODO integrate with Kafka to send audit data to audit service
     return response;
   }
 
-  private Position updatePositionInstrument(Position previousPosition, CreatePositionRequest positionRequest) {
+  private String generateTransactionRef(){
+    return UUID.randomUUID().toString();
+  }
 
+  private Position updatePositionInstrument(Position previousPosition, TradeRequest positionRequest, String transactionRef) {
     if (TradeType.buy.equals(positionRequest.getTradeType())) {
       previousPosition.setUnits(previousPosition.getUnits() + positionRequest.getUnits());
+      previousPosition.setTransactionRef(transactionRef);
       return positionRepository.save(previousPosition);
     }
 
@@ -59,7 +67,7 @@ public class PositionServiceImpl implements PositionService {
     Position position;
     int newUnit = previousPosition.getUnits() - positionRequest.getUnits();
     if (newUnit < 0) {
-      throw new TradingException("100003", "You don't have enough instrument to sell");
+      throw new TradingException(StatusCode.TRADE_NOT_ENOUGH_INSTRUMENT.getCode(), StatusCode.TRADE_NOT_ENOUGH_INSTRUMENT.getDesc());
     }
     if (newUnit == 0) {
       positionRepository.delete(previousPosition);
@@ -67,6 +75,7 @@ public class PositionServiceImpl implements PositionService {
       position.setUnits(0);
     } else {
       previousPosition.setUnits(newUnit);
+      previousPosition.setTransactionRef(transactionRef);
       position = positionRepository.save(previousPosition);
     }
     return position;

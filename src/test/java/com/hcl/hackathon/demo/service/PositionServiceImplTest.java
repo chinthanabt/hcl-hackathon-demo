@@ -2,7 +2,7 @@ package com.hcl.hackathon.demo.service;
 
 import com.hcl.hackathon.demo.configuration.exceptionHandler.TradingException;
 import com.hcl.hackathon.demo.constants.TradeType;
-import com.hcl.hackathon.demo.domain.position.CreatePositionRequest;
+import com.hcl.hackathon.demo.domain.position.TradeRequest;
 import com.hcl.hackathon.demo.entity.portfolio.Position;
 import com.hcl.hackathon.demo.mapper.PositionMapper;
 import com.hcl.hackathon.demo.repository.PositionRepository;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -38,7 +37,7 @@ class PositionServiceImplTest {
   @Test
   void testTrade_NewPosition() {
     // Arrange
-    CreatePositionRequest request = new CreatePositionRequest();
+    TradeRequest request = new TradeRequest();
     request.setTradeType(TradeType.buy);
     request.setCustomerId(UUID.randomUUID());
     request.setInstrumentId(1l);
@@ -66,7 +65,7 @@ class PositionServiceImplTest {
   @Test
   void testTrade_UpdatePosition() {
     // Arrange
-    CreatePositionRequest request = new CreatePositionRequest();
+    TradeRequest request = new TradeRequest();
     request.setTradeType(TradeType.sell);
     request.setCustomerId(UUID.randomUUID());
     request.setInstrumentId(1l);
@@ -91,7 +90,7 @@ class PositionServiceImplTest {
   @Test
   void testTrade_NotEnoughUnitsToSell() {
     // Arrange
-    CreatePositionRequest request = new CreatePositionRequest();
+    TradeRequest request = new TradeRequest();
     request.setTradeType(TradeType.sell);
     request.setCustomerId(UUID.randomUUID());
     request.setInstrumentId(1l);
