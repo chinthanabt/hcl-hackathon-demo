@@ -51,7 +51,10 @@ spring:
     url: jdbc:mysql://localhost:3306/testdb
     username: root
     password: root
-    
+
+springdoc:
+  swagger-ui:
+    path: /doc/swagger-ui-custom.html
 #  datasource:
 #    driverClassName: org.h2.Driver
 #    url: jdbc:h2:mem:testdb
